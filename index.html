@@ -400,14 +400,9 @@
                 <h3>📝 Source Code</h3>
                 <span class="editor-stats" id="sourceStats">0 lines</span>
             </div>
-            <textarea id="sourceCode" placeholder="-- Paste your Lua/Luau code here
+            <textarea id="sourceCode" placeholder="-- Paste your Lua/Luau code here...">-- Sample Lua Script
 ```
 
-local function myFunction()
-print(‘Hello World!’)
-end
-
-myFunction()”>– Sample Lua Script
 local function calculateSum(a, b)
 local result = a + b
 print(“The sum is: “ .. result)
@@ -460,7 +455,6 @@ end</textarea>
     }
 
     function encodeString(str) {
-        // Convert string to byte array representation
         let bytes = [];
         for (let i = 0; i < str.length; i++) {
             bytes.push(str.charCodeAt(i));
@@ -500,13 +494,11 @@ end</textarea>
 
         let obfuscated = sourceCode;
 
-        // Remove comments
         if (settings.removeComments) {
             obfuscated = obfuscated.replace(/--.*$/gm, '');
             obfuscated = obfuscated.replace(/--\[\[[\s\S]*?\]\]/g, '');
         }
 
-        // Encode strings
         if (settings.encodeStrings) {
             obfuscated = obfuscated.replace(/"([^"]*)"/g, (match, str) => {
                 return encodeString(str);
@@ -516,7 +508,6 @@ end</textarea>
             });
         }
 
-        // Obfuscate numbers
         if (settings.obfuscateNumbers) {
             obfuscated = obfuscated.replace(/\b(\d+)\b/g, (match, num) => {
                 if (parseInt(num) < 100) {
@@ -526,7 +517,6 @@ end</textarea>
             });
         }
 
-        // Rename variables (simple version)
         if (settings.renameVars) {
             const varMap = {};
             const localVarRegex = /local\s+([a-zA-Z_][a-zA-Z0-9_]*)/g;
@@ -545,7 +535,6 @@ end</textarea>
             }
         }
 
-        // Add anti-tamper wrapper
         if (settings.antiTamper) {
             obfuscated = `-- Protected by Lua Obfuscator
 ```
@@ -558,7 +547,6 @@ return _()`;
 }
 
 ```
-        // Wrap in execution environment
         if (settings.controlFlow) {
             obfuscated = `(function()
 local __SCRIPT__ = function()
@@ -571,7 +559,6 @@ end)()`;
 }
 
 ```
-        // Minify
         if (settings.removeWhitespace) {
             obfuscated = obfuscated
                 .split('\n')
@@ -660,13 +647,11 @@ end`;
         document.getElementById('sourceStats').textContent = lines + ' lines';
     }
 
-    // Update line count
     document.getElementById('sourceCode').addEventListener('input', function() {
         const lines = this.value.split('\n').length;
         document.getElementById('sourceStats').textContent = lines + ' lines';
     });
 
-    // Initialize
     window.onload = function() {
         const lines = document.getElementById('sourceCode').value.split('\n').length;
         document.getElementById('sourceStats').textContent = lines + ' lines';
